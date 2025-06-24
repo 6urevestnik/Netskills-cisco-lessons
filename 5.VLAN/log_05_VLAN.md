@@ -36,148 +36,113 @@
 
 ### VLAN c одним коммутатором
 
-1.Размещение:
+1. Размещение:
 - Switch1
 - 4 PC: PC2-PC5 (соединены прямыми кабелями)
 
-2.Создание VLAN:
+2. Создание VLAN:
+
 '''bash
+
 Switch(config)# vlan 2
+
 Switch(config)# name VLAN2
+
 Switch(config)# vlan 3
+
 Switch(config)# name VLAN3
 
-3.Хосты PC2 - PC3 добавить в vlan 2
+
+3. Назначение Access-портов:
+- VLAN 2: FastEthernet 0/1-2
+- VLAN 3: FastEthernet 0/3-4
+
+4. Команды: 
+
+''' bash
+
 Switch(config)# interface range fastethernet 0/1-2
+
 Switch(config)# switchport mode access
+
 Switch(config)# switchport access vlan 2
 
-4.Хосты PC3 - PC4 добавить в vlan 3
+
 Switch(config)# interface range fastethernet 0/3-4
+
 Switch(config)# switchport mode access
+
 Switch(config)# switchport access vlan 3
 
-5.Проверить конфигурацию vlan
-Switch# show vlan 
+5. Назначение IP-адресов: 
+- PC2 - 192.168.0.2 
+- PC3 - 192.168.0.3 
+- PC4 - 192.168.0.4 
+- PC5 - 192.168.0.5 
 
-или сокращенную версию
+6. Проверка:
+
 Switch# show vlan brief
 
+7. Проверка ping:
+- PC2 -> PC3 - успешно
+- PC4 -> PC5 - успешно
 
-6.Дать компьютерам IP-адреса:
+### VLAN с двумя коммутаторами
 
-PC2 - 192.168.0.2 255.255.255.0
-PC3 - 192.168.0.3 255.255.255.0
-PC4 - 192.168.0.4 255.255.255.0
-PC5 - 192.168.0.5 255.255.255.0
+1. Размещение
+- Switch2, Switch3
+- 8 PC: PC6-PC13
 
-7.Проверить ping внутри vlan
-PC2 -> PC3
-Ping 192.168.0.3
+2. VLAN
 
->Pinging 192.168.0.3 with 32 bytes of data:
+'''bash
 
->Reply from 192.168.0.3: bytes=32 time=2ms TTL=128
+vlan 2 - PC 6,7,8,9
+vlan 3 - PC 10,11,12,13
 
->Reply from 192.168.0.3: bytes=32 time<1ms TTL=128
+3. Конфигурация Access-портов:
 
-PC4 -> PC5
-Ping 192.168.0.5
+'''bash
 
->Pinging 192.168.0.5 with 32 bytes of data:
+Switch(config)# interface range fa0/1-2
 
->Reply from 192.168.0.5: bytes=32 time<1ms TTL=128
-
-**Применение VLAN с двумя коммутаторами
-
-1. Разместить на рабочей поверхности 2 коммутатора: Switch2 - Switch3 и 8 PC: PC6-PC13. Хосты соединить со свитчем кабелем прямого сечения.
-
-2.В CLI двух свитчей создать vlan 2 и vlan 3. Присвоить им названия:
-Switch(config)# vlan 2
-Switch(config)# name VLAN2
-Switch(config)# vlan 3
-Switch(config)# name VLAN3
-
-**3.Настройка VLAN2**
-На Switch 2 PC6-PC7 добавить в vlan 2
-Switch(config)# interface range fastethernet 0/1-2
 Switch(config)# switchport mode access
+
 Switch(config)# switchport access vlan 2
 
-На Switch 2 PC10-PC10 добавить в vlan 3
-Switch(config)# interface range fastethernet 0/3-4
+
+Switch(config)# interface range fa0/3-4
+
 Switch(config)# switchport mode access
-Switch(config)# switchport access vlan 3
 
+Switch(config)# switchport access vlan 2
 
+4. Настройка trunk-портов (между Switch2 и Switch3):
 
-**4.Настройка VLAN3**
-На Switch 2 PC10-PC11 добавить в vlan 3
-Switch(config)# interface range fastethernet 0/3-4
-Switch(config)# switchport mode access
-Switch(config)# switchport access vlan 3
+''' bash
 
-На Switch 3 PC12-PC13 добавить в vlan 3
-Switch(config)# interface range fastethernet 0/3-4
-Switch(config)# switchport mode access
-Switch(config)# switchport access vlan 3
-
-5.5.Проверить конфигурацию vlan
-Switch# show vlan 
-
-или сокращенную версию
-Switch# show vlan brief
-
-6.Дать компьютерам IP-адреса:
-
-PC6 - 192.168.0.6 255.255.255.0
-PC7 - 192.168.0.7 255.255.255.0
-PC8 - 192.168.0.8 255.255.255.0
-PC9 - 192.168.0.9 255.255.255.0
-PC10 - 192.168.0.10 255.255.255.0
-PC11 - 192.168.0.11 255.255.255.0
-PC12 - 192.168.0.12 255.255.255.0
-PC13 - 192.168.0.13 255.255.255.0
-
-7.Соединить Switch1 и Switch2 с помощью перекрёстного кабеля на портах GigabitEthernet 0/1 - GE0/1
-
-8.На switch1 сделать транк-порт и указать какие vlan's смогут передавать трафик через транк порт
 Switch(config)# interface gigabitethernet 0/1
+
 Switch(config)# switchport mode trunk
+
 Switch(config)# switchport trunk allowed vlan 2,3
 
-8.На switch2 сделать транк-порт и указать какие vlan's смогут передавать трафик через транк порт
-Switch(config)# interface gigabitethernet 0/1
-Switch(config)# switchport mode trunk
-Switch(config)# switchport trunk allowed vlan 2,3
-
-9.Проверить ping внутри vlan
-PC6 -> PC9
-Ping 192.168.0.9
-
->Pinging 192.168.0.9 with 32 bytes of data:
-
->Reply from 192.168.0.9: bytes=32 time<1ms TTL=128
-
->Reply from 192.168.0.9: bytes=32 time<1ms TTL=128
-
-PC10 -> PC13
-Ping 192.168.0.13
-
->Pinging 192.168.0.13 with 32 bytes of data:
-
->Reply from 192.168.0.13: bytes=32 time<1ms TTL=128
-
+5. Проверка ping
+- PC6 -> PC9 
+- PC10 -> PC13
+!ответы получены
 
 ---
 
-## Заключения из практики
-Очень приятно работать когда вначале планируешь у какого компьютера какой будет IP-адрес, потом намного легче конфигурировать статический IP-адрес.
+##  Заключения 
+- Очень удобно заранее планировать IP-адресацию: помогает при конфигурации и проверке
+- Access-порт работает только с одним VLAN - если устройство из другого VLAN, передача невозможна
+- Чтобы получить доступ к VLAN через access-порт - он должен быть привязан именно к нужному VLAN
+- Trunk-порт позволяет "упаковать" несколько VLAN и передавать их по одному физическому кабелю между коммутаторами
 
 ---
 
 ## Вывод
-Acceess-port - устанавливает режим доступа. Чтобы отправить или получить файл обращаясь к access-порту, нужно чтобы на этом порту был разрешён доступ на vlan из которой отправляешь запрос.
-Trunk-port - позволяет логически разбить физическое соединение на несколько сегментов.
-Коммутаторы между собой соединены по одному физическому каналу
-Этот физический канал можно разделить на логические каналы (сегментировать) - это даст более упорядоченное движение трафика, а следовательно ускорит работу
+VLAN - это не просто группировка устройств. Это мощный интсрумент логической изоляции и управления трафиком. 
+Работа с VLAN - первый шаг к структурной, масштабируемой и безопасной сети.
