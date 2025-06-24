@@ -44,11 +44,9 @@
 
 ```bash
 Switch(config)# vlan 2
-
 Switch(config)# name VLAN2
 
 Switch(config)# vlan 3
-
 Switch(config)# name VLAN3
 ```
 
@@ -58,20 +56,15 @@ Switch(config)# name VLAN3
 
 4. Команды: 
 
-''' bash
-
+```bash
 Switch(config)# interface range fastethernet 0/1-2
-
 Switch(config)# switchport mode access
-
 Switch(config)# switchport access vlan 2
 
-
 Switch(config)# interface range fastethernet 0/3-4
-
 Switch(config)# switchport mode access
-
 Switch(config)# switchport access vlan 3
+```
 
 5. Назначение IP-адресов: 
 - PC2 - 192.168.0.2 
@@ -80,8 +73,9 @@ Switch(config)# switchport access vlan 3
 - PC5 - 192.168.0.5 
 
 6. Проверка:
-
+```bash
 Switch# show vlan brief
+```
 
 7. Проверка ping:
 - PC2 -> PC3 - успешно
@@ -98,38 +92,27 @@ Switch# show vlan brief
 - 8 PC: PC6-PC13
 
 2. VLAN
-
-'''bash
-
-vlan 2 - PC 6,7,8,9
-vlan 3 - PC 10,11,12,13
+- vlan 2 - PC 6,7,8,9
+- vlan 3 - PC 10,11,12,13
 
 3. Конфигурация Access-портов:
-
-'''bash
-
+```bash
 Switch(config)# interface range fa0/1-2
-
 Switch(config)# switchport mode access
-
 Switch(config)# switchport access vlan 2
-
 
 Switch(config)# interface range fa0/3-4
-
 Switch(config)# switchport mode access
-
 Switch(config)# switchport access vlan 2
+```
 
 4. Настройка trunk-портов (между Switch2 и Switch3):
 
-''' bash
-
+```bash
 Switch(config)# interface gigabitethernet 0/1
-
 Switch(config)# switchport mode trunk
-
 Switch(config)# switchport trunk allowed vlan 2,3
+```
 
 5. Проверка ping
 - PC6 -> PC9 
