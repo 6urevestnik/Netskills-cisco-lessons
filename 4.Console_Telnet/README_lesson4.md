@@ -28,42 +28,31 @@ Switch# configure terminal
 
 2.**Защита устройства:**
 
- '''bash
-
+```bash
 Switch(config)# enable password admin101
-
 Switch(config)# server-password encryption
-
 Switch(config)# username Danila privilege 15 password admin102
+```
 
 3.**Настройка консольного доступа:**
-
-'''bash
-
+```bash
 Switch(config)# line console 0
-
 Switch(config-line)# login local
+```
 
 4.**Назначение IP-адреса:**
-
-'''bash
-
+```bash
 Switch(config)# interface vlan 1
-
 Switch(config-if)# ip address 192.168.0.1 255.255.255.0
-
 Switch(config-if)# no shutdown
+```
 
 5.**Настройка Telnet:**
-
-'''bash
-
+```bash
 Switch(config)# line vty 0 4
-
 Switch(config-line)# transport input telnet
-
 Switch(config-line)# login local
-
+```
 
 6.**PC0:**
 - Назначить IP-aдрес 192.168.0.2 / 255.255.255.0
