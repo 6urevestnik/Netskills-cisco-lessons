@@ -88,6 +88,10 @@ Switch# show vlan brief
 - PC2 -> PC3 - успешно
 - PC4 -> PC5 - успешно
 
+[!Смотреть топологию](./final_vlan_switch1.png)
+
+---
+
 ### VLAN с двумя коммутаторами
 
 1. Размещение
@@ -132,6 +136,8 @@ Switch(config)# switchport trunk allowed vlan 2,3
 - PC6 -> PC9 
 - PC10 -> PC13
 !ответы получены
+
+[!Смотреть топологию](./final_vlan_switch2-3.png)
 
 ---
 
