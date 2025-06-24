@@ -62,6 +62,7 @@ Ping from PC0 to PC2:
 ping 192.168.1.3
 ```
 > Pinging 192.168.1.3 with 32 bytes of data:
+
 > Reply from 192.168.1.3: bytes=32 time<1ms TTL=128
 
 5.**Отправить пакет с PC0 на PC3**
@@ -91,6 +92,7 @@ Ping from PC4 to PC7:
 ping 192.168.2.4
 ```
 > Pinging 192.168.2.4 with 32 bytes of data:
+
 > Reply from 192.168.2.4: bytes=32 time<1ms TTL=128
 
 5.**Отправить пакет с PC4 на PC7.**
