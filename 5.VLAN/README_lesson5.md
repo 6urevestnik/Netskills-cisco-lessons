@@ -43,7 +43,6 @@
 2. Создание VLAN:
 
 '''bash
-
 Switch(config)# vlan 2
 
 Switch(config)# name VLAN2
@@ -51,7 +50,7 @@ Switch(config)# name VLAN2
 Switch(config)# vlan 3
 
 Switch(config)# name VLAN3
-
+'''
 
 3. Назначение Access-портов:
 - VLAN 2: FastEthernet 0/1-2
