@@ -34,7 +34,7 @@
 
 **Статическое агрегирование**
 
-1. Размещение
+1. **Размещение**
 
 Разместить Switch0 и Switch1, PC0 и PC1
 
@@ -44,7 +44,8 @@ PC1 и Switch0 соединяем на Fa0/1 - Fa0/3
 
 Порты Fa0/1-2 будут объединены в агрегированный канал
 
-2.Настройка интерфейсов
+2. **Настройка интерфейсов**
+
 Настроить интерфейсы прежде чем сделать линки между Switch0 и Switch1
 
 Создать логические интерфейсы channel-group на свитчах
@@ -54,12 +55,12 @@ Switch(config)# interface range fastethernet 0/1-2
 Switch(config-if-range)# channel-group 1 mode on
 ```
 
-3.Соединить Switch's, прописать IP-адресацию на PC, проверить соединение
-Fa0/1 - Fa0/1
-Fa0/2 - Fa0/2
+3.Соединить Switch's - прописать IP-адресацию на PC - проверить соединение
+-Fa0/1 - Fa0/1
+-Fa0/2 - Fa0/2
 
-PC0: 192.168.1.1 255.255.255.0
-PC1: 192.168.1.2 255.255.255.0
+-PC0: 192.168.1.1 255.255.255.0
+-PC1: 192.168.1.2 255.255.255.0
 
 Ping PC0 to PC1
 ```bash
@@ -73,6 +74,7 @@ ping 192.168.1.2
 ![Общий вид](./Static/static_all.png)
 
 4.Проверить отказоустойчивость
+
 Потушим линк Fa0/2 на Switch1 и в одновременно сделаем ping PC1 to PC0
 ```bash
 Switch(config)# interface fastethernet 0/2
@@ -80,8 +82,8 @@ Switch(config-if) shutdown
 ```
 
 ping прошёл без потерь!
-![ping+shutdown](./static/static_shutdown1.png)
-![results](./static/static_shutdown2.png)
+![ping+shutdown](./Static/static_shutdown1.png)
+![results](./static/Static_shutdown2.png)
 
 5.Логически завершить работу и обратно поднять линк на Switch2
 ```bash
@@ -100,10 +102,11 @@ Switch(config-if)# switchport mode trunk
 **Динамическое агрегирование**
 
 1. Размещение
-Разместить L2 Switch1-3 и L3 Switch1
-Сделать топологию "звезда"
+- Разместить L2 Switch1-3 и L3 Switch1
+- Сделать топологию "звезда"
 
 2.Настройка конфигураций L3 коммутатора
+
 Конфигурируем агрегированные каналы
 - Switch1 - Fa0/1-2
 - Switch2 - Fa0/3-4
@@ -161,12 +164,12 @@ Switch>show etherchannel port-channel
 ```
 
 5.Соединить L2 Switch's и L3 Switch
-Switch1 Fa0/1 - L3 Switch Fa0/1
-Switch1 Fa0/2 - L3 Switch Fa0/2
-Switch2 Fa0/1 - L3 Switch Fa0/3
-Switch2 Fa0/2 - L3 Switch Fa0/4
-Switch3 Fa0/1 - L3 Switch Fa0/5
-Switch4 Fa0/2 - L3 Switch Fa0/6
+- Switch1 Fa0/1 - L3 Switch Fa0/1
+- Switch1 Fa0/2 - L3 Switch Fa0/2
+- Switch2 Fa0/1 - L3 Switch Fa0/3
+- Switch2 Fa0/2 - L3 Switch Fa0/4
+- Switch3 Fa0/1 - L3 Switch Fa0/5
+- Switch4 Fa0/2 - L3 Switch Fa0/6
 
 ## Вывод:
 - Протокол-Pagp - поддерживается только на оборудовании Cisco
