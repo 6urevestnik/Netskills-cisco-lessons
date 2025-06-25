@@ -63,37 +63,37 @@ Switch(config-if) no shutdown
 ```
 
 - Конфигурация ПК
-  - PC0 - vlan 2 - IP 2.2.2.2  -  mask 255.255.255.0 - gate 2.2.2.1
-  - PC1 - vlan 3 - IP 3.3.3.3  -  mask 255.255.255.0 - gate 3.3.3.1
-  - PC2 - vlan 4 - IP 4.4.4.4  -  mask 255.255.255.0 - gate 4.4.4.1
+  - PC0 - IP 2.2.2.2  -  mask 255.255.255.0 - gate 2.2.2.1 - vlan 2 
+  - PC1 - IP 3.3.3.3  -  mask 255.255.255.0 - gate 3.3.3.1 - vlan 3 
+  - PC2 - IP 4.4.4.4  -  mask 255.255.255.0 - gate 4.4.4.1 - vlan 4 
 
 - Проверить результаты конфигурации
-![интерфейс вилан](./scrns/conig_vlan.png)
-![фаст езернет](./scrns/conif_f-e.png)
+![интерфейс вилан](./scrns/config_vlan.png)
+![фаст езернет](./scrns/config_f-e.png)
 
 - Проверить свзяь
 ![пинг пк0](./scrns/pc0_ping.png)
 ![пинг пк1](./scrns/pc1_ping.png)
 ![пинг пк2](./scrns/pc2_ping.png)
 
-- Дать возможность межсетевого взаимодействия
+- Включение маршрутизации
 ```bash
 # L3 Switch config:
 Switch(config) ip routing
 ```
-- Проверить результаты  
+- Проверка связности
 ![пинг пк0](./scrns/pc0_ping2.png)
 ![пинг пк1](./scrns/pc1_ping2.png)
 ![пинг пк2](./scrns/pc2_ping2.png)
 
 ---
 
-**Пример большой сети**
+**Расширенная топология (с L2 коммутаторами)**
 
 **Топология**
-- L3 Switch
-- К нему подключены Switch0 и Switch1 (L2)
-- К свитчам подключены по 2 PC
+- 1х L3 Switch
+- 2х L2 Switch (Switch0, Switch1)
+- 4x PC (PC3 - PC6), подключенные по 2 к каждому L2
   - PC3 - Switch0 - Fa0/1 - vlan 2 - IP 2.2.2.2 255.255.255.0 - gate 2.2.2.1
   - PC4 - Switch0 - Fa0/2 - vlan 3 - IP 3.3.3.2 255.255.255.0 - gate 3.3.3.1
   - PC5 - Switch1 - Fa0/1 - vlan 2 - IP 2.2.2.3 255.255.255.0 - gate 2.2.2.1
@@ -102,23 +102,21 @@ Switch(config) ip routing
 **Конфигурация**
 - Определить PC в vlan согласно топологии
 ```bash
-# Настройка switch 2
+# Создзание vlan 2
 Switch(config) vlan 2
 Switch(config-vlan) name VLAN2
+
+# Назначение портов
 Switch(config) interface fastethernet 0/1
 Switch(config-if) switchport mode access
 Switch(config-if) switchport access vlan 2
-```
 
-- Настроить trunk порт L2 Switch с L3 Switch
-
-```bash
-# Настройка switch 2
+# Настройка trunk-порта (к L3 switch)
 Switch(config) interface gigabitethernet 0/1
 Switch(config-if) switchport mode trunk
 Switch(config-if) switchport trunk allowed vlan 2,3
-```
 
+```
 - Проверить конфигурации
 ```bash
 Switch show running-config
@@ -130,38 +128,59 @@ Switch show running-config
 
 - Настроить L3 Switch
 ```bash
+#Создзание vlan 
 Switch(config)#vlan 2
 Switch(config-vlan)#name VLAN2
-# Аналогично создать vlan 3 
+
+Switch(config)#vlan 3
+Switch(config-vlan)#name VLAN3
+
+# Trunk-порт к L2 switch
 Switch(config) interface gigabitethernet 0/1
 Switch(config-if) switchport trunk encapsulation dot1q 
 Switch(config-if) switchport mode trunk
 Switch(config-if)#switchport trunk allowed vlan 2,3
-# аналогично для gi 0/2 и Switch1
-```
 
-- На созданные виртуальные интерфейсы сконфигурируем IP-адреса
-  - vlan 2 - 2.2.2.1 255.255.255.0
-  - vlan 3 - 3.3.3.1 255.255.255.0
+# Аналогично для второго порта
 
-```bash
+# IP на интерфейсах VLAN
 Switch(config) interface vlan 2
 Switch(config-if) ip address 2.2.2.1 255.255.255.0
-# Обязательно прописать ip route!
+Switch(config-if) no shutdown
+
+Switch(config) interface vlan 3
+Switch(config-if) ip address 3.3.3.1 255.255.255.0
+Switch(config-if) no shutdown
+
+#Включаем маршрутизацию
 Switch(config) ip routing
+
 ```
 
-- Проверить ping
+- Проверка
 ```bash
-ping 3.3.3.2
-ping 2.2.2.3
-ping 3.3.3.3
+# Проверка маршрутов
+Switch> show ip route
+
+# Проверка интерфейсов
+Switch> show ip interface brief
+
+# Ping с PC
+PC> ping 3.3.3.2
+PC> ping 2.2.2.3
+PC> ping 3.3.3.3
 ```
 ![ping_reslts](./srcns/ping_all.png)
 
 ---
 
 ## Вывод
-- L2 коммутаторы предлагают самую низкую стоимость портов
+- L2-коммутаторы дешевле и проще, но не умеют маршрутизировать.
+- L3-коммутаторы - позволяют объединить несколько VLAN в единую сеть без отдельного маршрутизатора.
+- Trunk-соединения необходимы для передачи трафика нескольких VLAN между коммутаторами.
+- Инкапсуляция dot1q - стандарт для большинства сетевых устройств.
+- Если проблемы со связью - всегда надо проверять show run, show vlan brief, show ip int brief,
+
+
 - Между коммутаторами лучше использовать самые быстрые линки, чтобы обеспечить наибольшую производительность
 - Лучше всегда использовать инкапсуляцию dot1q - она стандартная для большинства оборудования
