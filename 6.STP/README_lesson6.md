@@ -48,14 +48,15 @@ Switch# show spanning-tree
 ```bash
 Switch# show spanning-tree
 ```
+**Switch2**
 - Fa0/1 порт который ближе к корневому свитчу - корневой root
 - Fa0/2 порт - назначенный desg
 ![Показать switch2](./STP_switch2.png)
 
-Switch1
-![Показать switch1](./STP_switch1.png)
+**Switch1**
 - Fa0/1 порт который ближе к корневому - root
 - Fa0/2 порт заблокирован - на данный сегмент уже есть назначенный порт
+![Показать switch1](./STP_switch1.png)
 
 4. Чтобы проверить работу протокола STP нужно выключить порт Fa0/1 на Switch2
 ```bash 
@@ -67,6 +68,7 @@ Switch(config)# shutdown
 В это время начал свою работу порт Fa0/2 на switch 1
 - Перешёл в режим обучения (LRN)
 - Перешёл в режим передачи (FWD)
+
 ![Линк поднялся](./STP_switch1_linkup.png)
 
 ---
