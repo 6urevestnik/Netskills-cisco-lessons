@@ -33,7 +33,7 @@
 1.**Размещение** Switch0, Switch1, Switch2 соединены топологией кольцо.
 - Начинает работу протокол STP
 - Определяется корневой коммутатор согласно параметрам
-![Размещение](./STP_search_root.png)
+![Размещение](./STP_screenshoots/STP_search_root.png)
 
 2.Определение Root bridge
 ```bash
@@ -42,7 +42,7 @@ Switch# show spanning-tree
 **Корневой коммутатор - Switch0**
 - У корневого коммутатора в конфиге написано "This bridge is the root"**
 - У этого коммутатора все порты назначены (Desg) и в режиме пeредачи (FWD)
-![Показать корневой коммутатор](./STP_root_switch.png)
+![Показать корневой коммутатор](./STP_screenshoots/STP_root_switch.png)
 
 3.Проверить конфигурации остальных коммутаторов
 ```bash
@@ -51,25 +51,25 @@ Switch# show spanning-tree
 **Switch2**
 - Fa0/1 порт который ближе к корневому свитчу - корневой root
 - Fa0/2 порт - назначенный desg
-![Показать switch2](./STP_switch2.png)
+![Показать switch2](./STP_screenshoots/STP_switch2.png)
 
 **Switch1**
 - Fa0/1 порт который ближе к корневому - root
 - Fa0/2 порт заблокирован - на данный сегмент уже есть назначенный порт
-![Показать switch1](./STP_switch1.png)
+![Показать switch1](./STP_screenshoots/STP_switch1.png)
 
 4. Чтобы проверить работу протокола STP нужно выключить порт Fa0/1 на Switch2
 ```bash 
 Switch(config)# interface fa0/1
 Switch(config)# shutdown
 ```
-![Линк опустили](./STP_fa01_shutdown.png)
+![Линк опустили](./STP_screenshoots/STP_fa01_shutdown.png)
 
 В это время начал свою работу порт Fa0/2 на switch 1
 - Перешёл в режим обучения (LRN)
 - Перешёл в режим передачи (FWD)
 
-![Линк поднялся](./STP_switch1_linkup.png)
+![Линк поднялся](./STP_screenshoots/STP_switch1_linkup.png)
 
 ---
 
@@ -77,7 +77,7 @@ Switch(config)# shutdown
 
 1. Разместить Switch0-1 и PC0-1
 - Протокол STP работает с коммутационной петлёй
-![Протокол STP в работе](./STP_inwork.png)
+![Протокол STP в работе](./RSTP_screenshoots/RSTP_inwork.png)
 
 2. Настроить IP-адресацию на PC0-PC1 и проверить ping
 - PC0: 192.168.1.1 255.255.255.0
@@ -107,10 +107,10 @@ Switch1:
 - Fa0/1 Desg FWD
 
 4. Гасим порт Fa0/1 на Switch1 и наблюдаем
-![Погасили порт](./RSTP_fa01_sh.png)
+![Погасили порт](./RSTP_screenshoots/RSTP_fa01_shutdown.png)
 - Некоторое время Fa0/3 на Switch 1 находится в режиме LRN
 - Связь восстанавливается только после перехода Fa0/3 в режим FWD
-![Поднялся линк](./RSTP_fa01_linkup.png)
+![Поднялся линк](./RSTP_screenshoots/RSTP_fa01_linkup.png)
 
 5. Подключение RSTP на Switch1 и Switch2
 ```bash
@@ -122,13 +122,13 @@ Switch(config)# spanning-tree mode rapid-pvst
 Switch# show spanning-tree
 ```
 В конфигурации должна быть строка "Spanning tree enabled protocol rstp"
-![подключён RSTP](./RSTP_on.png)
+![подключён RSTP](./RSTP_screenshoots/RSTP_on.png)
 
 7. Заускаем ping и гасим Switch1 - Fa0/3
 Дивимся результатам работы RSTP!
 При одновременном выполнении команды ping на PC0 и shutdown на Switch1 не было задержек или потери данных
-![Пинг запущен](./RSTP_on1.png)
-![Пинг без потерь](./RSTP_on2.png)
+![Пинг запущен](./RSTP_screenshoots/RSTP_on1.png)
+![Пинг без потерь](./RSTP_screenshoots/RSTP_on2.png)
 
 ## Вывод:
 - Организация отказоустойчивой сети нужна для возможности быстро восстановить работу сети в случае если возникнет какая-либо проблема
