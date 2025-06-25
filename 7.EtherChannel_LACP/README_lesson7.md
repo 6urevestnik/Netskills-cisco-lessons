@@ -60,7 +60,7 @@ PC1: 192.168.1.2 255.255.255.0
 Ping PC0 to PC1
 ```bash
 ping 192.168.1.2
----
+```
 
 >Pinging 192.168.1.2 with 32 bytes of data:
 
