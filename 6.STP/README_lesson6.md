@@ -33,7 +33,7 @@
 1.**Размещение** Switch0, Switch1, Switch2 соединены топологией кольцо.
 - Начинает работу протокол STP
 - Определяется корневой коммутатор согласно параметрам
-![Размещение](./STP_search_root)
+![Размещение](./STP_search_root.png)
 
 2.Определение Root bridge
 ```bash
@@ -63,12 +63,12 @@ Switch1
 Switch(config)# interface fa0/1
 Switch(config)# shutdown
 ```
-![Линк опустили](./STP_fa01_shutdowm.png)
+![Линк опустили](./STP_fa01_shutdown.png)
 
 В это время начал свою работу порт Fa0/2 на switch 1
 - Перешёл в режим обучения (LRN)
 - Перешёл в режим передачи (FWD)
-![Линк поднялся](./STP_switch1_linkup)
+![Линк поднялся](./STP_switch1_linkup.png)
 
 ---
 
