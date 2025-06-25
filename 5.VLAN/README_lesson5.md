@@ -41,7 +41,6 @@
 - 4 PC: PC2-PC5 (соединены прямыми кабелями)
 
 2. Создание VLAN:
-
 ```bash
 Switch(config)# vlan 2
 Switch(config)# name VLAN2
@@ -55,7 +54,6 @@ Switch(config)# name VLAN3
 - VLAN 3: FastEthernet 0/3-4
 
 4. Команды: 
-
 ```bash
 Switch(config)# interface range fastethernet 0/1-2
 Switch(config)# switchport mode access
