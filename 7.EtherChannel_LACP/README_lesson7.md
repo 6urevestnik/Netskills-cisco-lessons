@@ -37,14 +37,14 @@
 
 **Статическое агрегирование**
 
-Топология:
+**Топология:**
 
 - Устройства: Switch0, Switch1, PC0, PC1
 - Соединения между Switch0 и PC0: Fa0/1 - Fa0/3
 - Соединения между Switch1 и PC1: Fa0/1 - Fa0/3
 - Порты свитчей Fa0/1-2 будут объединены в агрегированный канал
 
-Конфигурация:
+**Конфигурация:**
 
 - Прописать IP-адресацию на PC
   - PC0: 192.168.1.1 255.255.255.0
@@ -64,20 +64,20 @@ ping 192.168.1.2
 
 ![Общий вид](./Static/static_all.png)
 
-Тест отказоустойчивости
+**Тест отказоустойчивости**
 
 - Потушить линк Fa0/2 на Switch1 
 - Одновременно сделать ping PC1 to PC0
 ```bash
 Switch(config)# interface fastethernet 0/2
-Switch(config-if) shutdown
+Switch(config-if)# shutdown
 ```
 
 - ping прошёл успешно - подтверждена отказоустойчивость агрегированного канала
 ![ping+shutdown](./Static/static_shutdown1.png)
 ![results](./Static/static_shutdown2.png)
 
-Логически завершить работу и обратно поднять линк на Switch2
+**Логически завершить работу и обратно поднять линк на Switch2**
 ```bash
 Switch(config)# interface fastethernet 0/2
 Switch(config-if)# no shutdown
