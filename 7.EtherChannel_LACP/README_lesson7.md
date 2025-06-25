@@ -39,6 +39,7 @@
 - Разместить Switch0 и Switch1, PC0 и PC1
   - PC0 и Switch0 соединяем на Fa0/1 - Fa0/3
   - PC1 и Switch0 соединяем на Fa0/1 - Fa0/3
+
 Порты Fa0/1-2 будут объединены в агрегированный канал
 
 2. **Настройка интерфейсов**
@@ -50,13 +51,15 @@ Switch(config)# interface range fastethernet 0/1-2
 Switch(config-if-range)# channel-group 1 mode on
 ```
 
-3.Соединить Switch's - прописать IP-адресацию на PC - проверить соединение
--Fa0/1 - Fa0/1
--Fa0/2 - Fa0/2
+3.Соединение устройств в топологию
 
--PC0: 192.168.1.1 255.255.255.0
--PC1: 192.168.1.2 255.255.255.0
-
+- Соединить Switch1 и Switch2
+  -Fa0/1 - Fa0/1
+  -Fa0/2 - Fa0/2
+- Прописать IP-адресацию на PC
+  - PC0: 192.168.1.1 255.255.255.0
+  - PC1: 192.168.1.2 255.255.255.0
+- Проверить соединение
 Ping PC0 to PC1
 ```bash
 ping 192.168.1.2
@@ -70,7 +73,8 @@ ping 192.168.1.2
 
 4.Проверить отказоустойчивость
 
-Потушим линк Fa0/2 на Switch1 и в одновременно сделаем ping PC1 to PC0
+- Потушить линк Fa0/2 на Switch1 
+- Одновременно сделать ping PC1 to PC0
 ```bash
 Switch(config)# interface fastethernet 0/2
 Switch(config-if) shutdown
@@ -78,7 +82,7 @@ Switch(config-if) shutdown
 
 ping прошёл без потерь!
 ![ping+shutdown](./Static/static_shutdown1.png)
-![results](./static/Static_shutdown2.png)
+![results](./Static/static_shutdown2.png)
 
 5.Логически завершить работу и обратно поднять линк на Switch2
 ```bash
@@ -128,7 +132,7 @@ Switch(config-if-range)# channel-protocol lacp
 Switch(config-if-range)# channel-group 3 mode active
 ```
 
-3.Настроить коммутаторы уровня доступа Switch1 - Switch3
+3.Настроить коммутаторы уровня доступа
 
 Switch1
 ```bash
@@ -151,7 +155,7 @@ Switch(config-if-range)# channel-protocol lacp
 Switch(config-if-range)# channel-group 3 mode passive
 ```
 
-4.Проверить статус etherchannel-port'a
+4.Проверить статус etherchannel-port
 ```bash
 Switch>show etherchannel
 Switch>show etherchannel summary
