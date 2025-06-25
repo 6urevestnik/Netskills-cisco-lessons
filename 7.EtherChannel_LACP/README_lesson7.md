@@ -9,24 +9,27 @@
 ---
 
 ## Основные задачи:
+- Освоить настройку агрегированных каналов между коммутаторами (EtherChannel)
+- Изучить работу протокола LACP
+- Реализовать топологию с отказоустойчивым логическим каналом
+- Проверить поведение сети при отказе одного из физических линков
 
 ---
 
 ## Теория:
-- Агрегирование каналов - метод организации отказоустойчивых каналов
-- Протокол EtherChannel - объединяет несколько физических каналов в один логический
- - Если используются два физических канала между коммутаторами - они буду логически восприниматься как один
- - В случае обрыва одного из линков передача информации не прекратится
-- Все соединения агрегированного канала активные и передают информацию - это повышает пропускную способность канала
-- LACP (link Aggregation Control Protocol) 
 
-**Для агрегирования каналы должны иметь одинаковые параметры:**
-- скорость (speed)
+- **EtherChannel** - технология объединения нескольких физических интерфейсов в один логический канал для увеличения пропускной способности и отказоустойчивости.
+- Используются все каналы одновременно (load balancing).
+- При обрыве одного из линков трафик перенаправляется по оставшимся.
+- Протоколы агрегации:
+  - LACP (IEEE 802.3ad) - открытый стандарт, педпочтителен.
+  - PAgP - протокол Cisco
+
+**Требования к интерфейсам EtherChannel:**
+- одинаковая скорость (speed)
 - режим дуплекса (duplex mode)
-- native VLAN
-- диапазон разрешенных VLAN
-- trunking status
-- тип интерфейса
+- trunk/native VLAN
+- одинаковый тип интерфейса
 
 ---
 
@@ -63,11 +66,8 @@ Switch(config-if-range)# channel-group 1 mode on
 Ping PC0 to PC1
 ```bash
 ping 192.168.1.2
+# Успешный ответ
 ```
-
->Pinging 192.168.1.2 with 32 bytes of data:
-
->Reply from 192.168.1.2: bytes=32 time=2ms TTL=128
 
 ![Общий вид](./Static/static_all.png)
 
@@ -100,69 +100,55 @@ Switch(config-if)# switchport mode trunk
 
 **Динамическое агрегирование**
 
-1. Размещение
-- Разместить L2 Switch1-3 и L3 Switch1
-- Сделать топологию "звезда"
+**Топология** 
+- L3 в центре
+- L2 Switch1, Switch2, Switch3 по краям (звезда)
 
-2.Настройка конфигураций L3 коммутатора
+**Настройка конфигураций L3 коммутатора**
 
 Конфигурируем агрегированные каналы
 - Switch1 - Fa0/1-2
 - Switch2 - Fa0/3-4
 - Switch3 - Fa0/5-6
 
-Первый агрегированный канал
 ```bash
+#Первый агрегированный канал
 Switch(config)# interface range fastethernet fa0/1-2
 Switch(config-if-range)# channel-protocol lacp
 Switch(config-if-range)# channel-group 1 mode active
-```
 
-Второй агрегированный канал
-```bash
+#Второй агрегированный канал
 Switch(config)# interface range fastethernet fa0/3-4
 Switch(config-if-range)# channel-protocol lacp
 Switch(config-if-range)# channel-group 2 mode active
-```
 
-Третий агрегированный канал
-```bash
+#Третий агрегированный канал
 Switch(config)# interface range fastethernet fa0/5-6
 Switch(config-if-range)# channel-protocol lacp
 Switch(config-if-range)# channel-group 3 mode active
 ```
 
-3.Настроить коммутаторы уровня доступа
+**Конфигурация L2-коммутаторов**
 
-Switch1
+# Конфигурирование Switch1
 ```bash
 Switch(config)# interface range fastethernet fa0/1-2
 Switch(config-if-range)# channel-protocol lacp
 Switch(config-if-range)# channel-group 1 mode passive
 ```
 
-Switch2
-```bash
-Switch(config)# interface range fastethernet fa0/1-2
-Switch(config-if-range)# channel-protocol lacp
-Switch(config-if-range)# channel-group 2 mode passive
-```
+- Повторить аналогично для остальных L2-коммутаторов, указав соответствующий номер channel-group
+  - Switch2 - channel-group 2
+  - Switch3 - channel-group 3
 
-Switch3
-```bash
-Switch(config)# interface range fastethernet fa0/1-2
-Switch(config-if-range)# channel-protocol lacp
-Switch(config-if-range)# channel-group 3 mode passive
-```
-
-4.Проверить статус etherchannel-port
+**Проверить статус etherchannel-port**
 ```bash
 Switch>show etherchannel
 Switch>show etherchannel summary
 Switch>show etherchannel port-channel
 ```
 
-5.Соединить L2 Switch's и L3 Switch
+**Соединить L2 Switch's и L3 Switch**
 - Switch1 Fa0/1 - L3 Switch Fa0/1
 - Switch1 Fa0/2 - L3 Switch Fa0/2
 - Switch2 Fa0/1 - L3 Switch Fa0/3
@@ -171,14 +157,16 @@ Switch>show etherchannel port-channel
 - Switch4 Fa0/2 - L3 Switch Fa0/6
 
 ## Вывод:
-- Протокол-Pagp - поддерживается только на оборудовании Cisco
-- При создании динамического агрегированного канала сначала указать протокол lacp, а потом добавить в channel-group
-- Рекомендуется использовать параметр active только с одной стороны линка, на вторую ставить параметр passive
+- EtherChannel увеличивает пропускную способность и даёт отказоустойчивость.
+- LACP предпочтительнее, чем статический режим.
+- Mode active + mode passive = корректная динамическая настройка.
+- При ошибочной конфигурации - срабатывает STP, блокирую один из линков.
+- **channel-group номедла должны быть уникальны для каждого логического канала на устройстве.***
 
 ## Работа над ошибками
-- Указал на Switch2 и Switch3 port-channel 1. Это привело к тому, что там просто начал работать протокол STP и один линк был полностью Desg, а второй был Desg-Altn
-- Убрал полностью соединения L2 свитчей с свитчем L3. Изменил конфигурацию channel-group
-- Проверил конфигурацию, полностью убрал старую конфигурацию с помощью команды no
+- Ошибка: на Switch2 и Switch3 исопльзовался одинаковый номер channel-group = привело к блокировке линка STP.
+
+- Решение:
 ```bash
 Switch# show running-config
 
@@ -186,5 +174,6 @@ Switch(config)# interface fastethernet0/3
 Switch(config-if)# no channel-protocol
 Switch(config-if)# no channel-group
 ```
+-затем перенастройка с уникальными группами.
 
-![Всё работает](./dynamic/dynamic_allworks.png)
+![Всё работает](./Dynamic/dynamic_allworks.png)
