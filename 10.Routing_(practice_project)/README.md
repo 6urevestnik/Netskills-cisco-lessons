@@ -170,7 +170,7 @@ Router(config-subif) no shutdown
 
  ## Соединить сегменты №1,2,3 и 4
 
-
+![](./screenshot/topology_full.png)
 
 ### Указать маршруты к vlan для Router0
 ```bash
@@ -246,41 +246,8 @@ Router(config-if) no shutdown
 ### Таблица маршрутизации Router3
 ![Таблица маршрутизации Router3](./screenshot/ip_route_router3.png)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ---
 
 ## Работа над ошибками
 - Не было связи PC0 и PC9. Забыл прописать настройки на Switch3
-
-![](./screenshot/.png)
-![](./screenshot/.png)
-![](./screenshot/.png)
+- Перепутал маршруты от Router 2. С помощью no ip route стёр неверную конфигурацию и указал верную.
