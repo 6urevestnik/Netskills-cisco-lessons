@@ -170,7 +170,7 @@ Router(config) ip route 192.168.4.0 255.255.255.0 192.168.70.2
 # Настрорить Fa0/0 в сторону малого офиса
 Router(config) interface fastEthernet 0/0
 Router(config-if) no shutdown 
-Router(config-if) ip address 192.168.70.1 255.255.255.0 ????????????!!!!!!!!!!!!!!! 252!?!?!?!?
+Router(config-if) ip address 192.168.70.1 255.255.255.0
 
 # Настрорить Fa0/1 в сторону большого офиса
 Router(config) interface fastEthernet 0/1

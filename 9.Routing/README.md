@@ -248,7 +248,7 @@ Switch(config-if) switchport access vlan 5
 # Поднять интерфейс gi0/0 и задать IP-адрес
 Router(config) int gigabitEthernet 0/0
 Router(config-if) no shutdown 
-Router(config-if)#ip address 192.168.55.1 255.255.255.0
+Router(config-if) ip address 192.168.55.1 255.255.255.0
 
 # Проверить связь с L3 коммутатором
 ```
