@@ -162,9 +162,9 @@ Router(config-subif) no shutdown
 
 ### Проверка пинга между сегментами сети
 
-![Проверка пинга PC12 to PC13, PC14](./screenshot/ping_PC12.png)
-![Проверка пинга PC16 to PC15, PC17](./screenshot/ping_PC16.png)
-![Проверка пинга PC20 to PC19, PC18](./screenshot/ping_PC16.png)
+![Проверка пинга PC12 to PC13, PC14](./screenshot/ping_pc12.png)
+![Проверка пинга PC16 to PC15, PC17](./screenshot/ping_pc16.png)
+![Проверка пинга PC20 to PC19, PC18](./screenshot/ping_pc18.png)
 
 ---
 
