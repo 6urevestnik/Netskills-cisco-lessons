@@ -34,6 +34,12 @@
 | Server0    | 192.168.51.2 | 255.255.255.0 | 192.168.51.1 | 5    |
 | Server1    | 192.168.51.3 | 255.255.255.0 | 192.168.51.1 | 5    |
 
+#### Общая картина
+
+![Топология](./screenshot/topology_full.png)
+
+--- 
+
 ## Сегмент №1
 
 ![Первый большой сегмент сети](./screenshot/office1.png)
@@ -170,7 +176,7 @@ Router(config-subif) no shutdown
 
  ## Соединить сегменты №1,2,3 и 4
 
-![](./screenshot/topology_full.png)
+![Сегменты 2,3 и 4](./screenshot/topology_full.png)
 
 ### Указать маршруты к vlan для Router0
 ```bash
