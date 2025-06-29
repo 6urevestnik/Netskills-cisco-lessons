@@ -1,6 +1,7 @@
 # Урок 11 - DHCP-протокол
 
 **Дата:** 29.06.2025
+
 **Видеоурок:** [11.Видео уроки Cisco Packet Tracer. Курс молодого бойца. DHCP](https://vkvideo.ru/playlist/-32477510_12/video-32477510_456239175)
 
 **Цель урока:** Повторение ранее изученного материала
@@ -8,7 +9,7 @@
 ---
 
 ## Основные задачи 
-- Научиться пользоваться DHCP-протоколом и настраивать DHCP-сервер
+- Освоение и практическая отработка настройки DHCP-протокола в Cisco Packet Tracer. Работа с автоматической раздачей IP-адресов в простой и VLAN-сегментированной сетях.
 
 ---
 
@@ -30,6 +31,11 @@
 ---
 
 ### Простая топология
+
+- 1х Router (Router0)
+- 3х PC (PC0, PC1, PC2)
+- 1х L2 Switch (Switch0)
+- DHCP-сервер встроен в маршрутизатор
 
 ![Общий вид](screenshots/topology1.png)
 
@@ -74,9 +80,6 @@ Router(config) ip dhcp excluded-address 192.168.1.1
 ![Настройка IP-адреса DHCP на PC1](screenshots/pc0_dhcp3.png)
 ![Настройка IP-адреса DHCP на PC2](screenshots/pc0_dhcp4.png)
 
-- Настройка завершена. Пинг возвращается с 0% потерь
-![Пинг PC0 to PC1, PC2](screenshots/ping_pc0.png)
-
 - Проверить какому компьютеру какой IP-адрес был выдан
 ```bash
 Router show ip dhcp binding 
@@ -84,10 +87,25 @@ Router show ip dhcp binding
 
 ![IP-binding на Router0](screenshots/router0_dhcp_binding.png)
 
+#### Настройка завершена
+
+- Все ПК получили IP-адреса через DHCP
+- DHCP Relay корректно перенаправляет запросы
+- show ip dhcp binding показывает назначенные адреса
+- Пинг между устройствами успешен во всех сегментах
+
+![Пинг PC0 to PC1, PC2](screenshots/ping_pc0.png)
+
+
 ---
 
 
 ### Топология по сложнее
+
+- VLAN 2/3/4 на управляемом коммутаторе
+- Router-on-a-stick (интерфейсы g0/0.X)
+- Внешний DHCP-сервер в vlan 4
+- Используется 'ip helper-address' для ретрансляции DHCP-запросов
 
 ![Общий вид](screenshots/topology2.png)
 
