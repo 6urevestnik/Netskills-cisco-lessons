@@ -42,7 +42,7 @@ Switch# show spanning-tree
 **Корневой коммутатор - Switch0**
 - У корневого коммутатора в конфиге написано "This bridge is the root"**
 - У этого коммутатора все порты назначены (Desg) и в режиме пeредачи (FWD)
-![Показать корневой коммутатор](./STP_screenshoots/STP_root_switch.png)
+![Показать корневой коммутатор](./screenshots/STP_root_switch.png)
 
 3.Проверить конфигурации остальных коммутаторов
 ```bash
@@ -51,7 +51,7 @@ Switch# show spanning-tree
 **Switch2**
 - Fa0/1 порт который ближе к корневому свитчу - корневой root
 - Fa0/2 порт - назначенный desg
-![Показать switch2](./screenshotsv/STP_switch2.png)
+![Показать switch2](./screenshots/STP_switch2.png)
 
 **Switch1**
 - Fa0/1 порт который ближе к корневому - root
