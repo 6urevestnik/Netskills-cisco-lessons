@@ -126,7 +126,7 @@ Router(config-if) ip address 192.168.70.2 255.255.255.252
 # IP-адрес из той же подсети как на Router1
 ```
 - Проверить пинг Router0 to Router1
-![Проверка пинга Router0 to Router1](./screenshots/.ping_router0_to1.png)
+![Проверка пинга Router0 to Router1](./screenshots/ping_router0_to1.png)
 
 - Прописать маршрут по умолчанию на Router0, для связи компьютеров малого и большого офисов
 ```bash
