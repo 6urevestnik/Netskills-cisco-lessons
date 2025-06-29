@@ -52,8 +52,8 @@
 
 - Соединить свитчи линками
 ```bash
-Switch(config)# interface range fastethernet 0/1-2
-Switch(config-if-range)# channel-group 1 mode on
+Switch(config) interface range fastethernet 0/1-2
+Switch(config-if-range) channel-group 1 mode on
 ```
 - Проверить соединение
 Ping PC0 to PC1
@@ -62,32 +62,32 @@ ping 192.168.1.2
 # Успешный ответ
 ```
 
-![Общий вид](./Static/static_all.png)
+![Общий вид](./screenshots/static_all.png)
 
 **Тест отказоустойчивости**
 
 - Потушить линк Fa0/2 на Switch1 
 - Одновременно сделать ping PC1 to PC0
 ```bash
-Switch(config)# interface fastethernet 0/2
-Switch(config-if)# shutdown
+Switch(config) interface fastethernet 0/2
+Switch(config-if) shutdown
 ```
 
 - ping прошёл успешно - подтверждена отказоустойчивость агрегированного канала
-![ping+shutdown](./Static/static_shutdown1.png)
-![results](./Static/static_shutdown2.png)
+![ping+shutdown](./screenshots/static_shutdown1.png)
+![results](./screenshots/static_shutdown2.png)
 
 **Логически завершить работу и обратно поднять линк на Switch2**
 ```bash
-Switch(config)# interface fastethernet 0/2
-Switch(config-if)# no shutdown
+Switch(config) interface fastethernet 0/2
+Switch(config-if) no shutdown
 ```
 
 6.Создать Trunk-port
 На Switch1 и Switch2
 ```bash
-Switch(config)# interface port-channel 1
-Switch(config-if)# switchport mode trunk
+Switch(config) interface port-channel 1
+Switch(config-if) switchport mode trunk
 ```
 ---
 
@@ -107,27 +107,27 @@ Switch(config-if)# switchport mode trunk
 ```bash
 #Первый агрегированный канал
 Switch(config)# interface range fastethernet fa0/1-2
-Switch(config-if-range)# channel-protocol lacp
-Switch(config-if-range)# channel-group 1 mode active
+Switch(config-if-range) channel-protocol lacp
+Switch(config-if-range) channel-group 1 mode active
 
 #Второй агрегированный канал
-Switch(config)# interface range fastethernet fa0/3-4
-Switch(config-if-range)# channel-protocol lacp
-Switch(config-if-range)# channel-group 2 mode active
+Switch(config) interface range fastethernet fa0/3-4
+Switch(config-if-range) channel-protocol lacp
+Switch(config-if-range) channel-group 2 mode active
 
 #Третий агрегированный канал
-Switch(config)# interface range fastethernet fa0/5-6
-Switch(config-if-range)# channel-protocol lacp
-Switch(config-if-range)# channel-group 3 mode active
+Switch(config) interface range fastethernet fa0/5-6
+Switch(config-if-range) channel-protocol lacp
+Switch(config-if-range) channel-group 3 mode active
 ```
 
 **Конфигурация L2-коммутаторов**
 
 # Конфигурирование Switch1
 ```bash
-Switch(config)# interface range fastethernet fa0/1-2
-Switch(config-if-range)# channel-protocol lacp
-Switch(config-if-range)# channel-group 1 mode passive
+Switch(config) interface range fastethernet fa0/1-2
+Switch(config-if-range) channel-protocol lacp
+Switch(config-if-range) channel-group 1 mode passive
 ```
 
 - Повторить аналогично для остальных L2-коммутаторов, указав соответствующий номер channel-group
@@ -136,9 +136,9 @@ Switch(config-if-range)# channel-group 1 mode passive
 
 **Проверить статус etherchannel-port**
 ```bash
-Switch>show etherchannel
-Switch>show etherchannel summary
-Switch>show etherchannel port-channel
+Switch show etherchannel
+Switch show etherchannel summary
+Switch show etherchannel port-channel
 ```
 
 **Соединить L2 Switch's и L3 Switch**
@@ -161,12 +161,12 @@ Switch>show etherchannel port-channel
 
 - Решение:
 ```bash
-Switch# show running-config
+Switch show running-config
 
-Switch(config)# interface fastethernet0/3
-Switch(config-if)# no channel-protocol
-Switch(config-if)# no channel-group
+Switch(config) interface fastethernet0/3
+Switch(config-if) no channel-protocol
+Switch(config-if) no channel-group
 ```
 -затем перенастройка с уникальными группами.
 
-![Всё работает](./Dynamic/dynamic_allworks.png)
+![Всё работает](./screenshots/dynamic_allworks.png)
