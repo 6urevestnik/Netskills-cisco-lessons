@@ -68,13 +68,13 @@ Switch(config-if) no shutdown
   - PC2 - IP 4.4.4.4  -  mask 255.255.255.0 - gate 4.4.4.1 - vlan 4 
 
 - Проверить результаты конфигурации
-![интерфейс вилан](./scrns/config_vlan.png)
-![фаст езернет](./scrns/config_f-e.png)
+![интерфейс вилан](./screenshots/config_vlan.png)
+![фаст езернет](./screenshots/config_f-e.png)
 
 - Проверить свзяь
-![пинг пк0](./scrns/pc0_ping.png)
-![пинг пк1](./scrns/pc1_ping.png)
-![пинг пк2](./scrns/pc2_ping.png)
+![пинг пк0](./screenshots/pc0_ping.png)
+![пинг пк1](./screenshots/pc1_ping.png)
+![пинг пк2](./screenshots/pc2_ping.png)
 
 - Включение маршрутизации
 ```bash
@@ -82,9 +82,9 @@ Switch(config-if) no shutdown
 Switch(config) ip routing
 ```
 - Проверка связности
-![пинг пк0](./scrns/pc0_ping2.png)
-![пинг пк1](./scrns/pc1_ping2.png)
-![пинг пк2](./scrns/pc2_ping2.png)
+![пинг пк0](./screenshots/pc0_ping2.png)
+![пинг пк1](./screenshots/pc1_ping2.png)
+![пинг пк2](./screenshots/pc2_ping2.png)
 
 ---
 
@@ -123,8 +123,8 @@ Switch show running-config
 ```
 - Аналогично нужно настроить Switch1
 
-![results2](./scrns/int_config1.png)
-![results3](./scrns/int_config2.png)
+![results2](./screenshots/int_config1.png)
+![results3](./screenshots/int_config2.png)
 
 - Настроить L3 Switch
 ```bash
@@ -170,7 +170,7 @@ PC> ping 3.3.3.2
 PC> ping 2.2.2.3
 PC> ping 3.3.3.3
 ```
-![ping_reslts](./srcns/ping_all.png)
+![ping_reslts](./screenshots/ping_all.png)
 
 ---
 
