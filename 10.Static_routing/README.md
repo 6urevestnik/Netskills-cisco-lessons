@@ -126,7 +126,7 @@ Router(config-if) ip address 192.168.70.2 255.255.255.252
 # IP-адрес из той же подсети как на Router1
 ```
 - Проверить пинг Router0 to Router1
-![](./screenshots/.ping_router0_to1.png)
+![Проверка пинга Router0 to Router1](./screenshots/.ping_router0_to1.png)
 
 - Прописать маршрут по умолчанию на Router0, для связи компьютеров малого и большого офисов
 ```bash
@@ -138,7 +138,7 @@ Router(config)# ip route 0.0.0.0 0.0.0.0 192.168.70.1
 ```bash
 Router show ip route 
 ```
-![Таблица маршрутизации на Router0](./screenshots/shw_iprt.png)
+![Таблица маршрутизации на Router0](./screenshots/sh_iprt.png)
 - C - connected - присоединенные сети
 - S - static - статический маршрут (дефолтный)
 
