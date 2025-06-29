@@ -79,7 +79,7 @@ Switch# show vlan brief
 - PC2 -> PC3 - успешно
 - PC4 -> PC5 - успешно
 
-![Топология в Cisco Packet Tracer](./final_vlan_switch1.png)
+![Топология в Cisco Packet Tracer](./screenshots/final_vlan_switch1.png)
 
 ---
 
@@ -117,7 +117,7 @@ Switch(config)# switchport trunk allowed vlan 2,3
 - PC10 -> PC13
 !ответы получены
 
-![Топология в Cisco Packet Tracer](./final_vlan_switch2-3.png)
+![Топология в Cisco Packet Tracer](./screenshots/final_vlan_switch2-3.png)
 
 ---
 
