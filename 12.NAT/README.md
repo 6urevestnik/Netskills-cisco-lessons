@@ -47,10 +47,10 @@ IP-адреса: публичные и частные
 
 ### Топология 
 
-2x Маршрутизатор (Router0, Router1)
-1x L2-коммутатор (Switch0)
-2x Сервер (Server0, Server1)
-3x Компьютер (PC0, PC1, PC2)
+- 2x Маршрутизатор (Router0, Router1)
+- 1x L2-коммутатор (Switch0)
+- 2x Сервер (Server0, Server1)
+- 3x Компьютер (PC0, PC1, PC2)
 
 ![Общий вид](screenshots/topology1.png)
 
