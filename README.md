@@ -15,29 +15,14 @@
 
 N Урока - название урока
 
-|---docs/		<- схемы топологии
-
-|    |---diagram.vsdx
-
-|    |---diagram.png
-
-|
-
-|---files/		<- рабочие файлы
-
-|    |---lesson.pkt
-
-|    |---log.txt
-
-|
-
-|---screenchots/	<- только скриншоты
-
-|    |---...
-
-|
-
-|---README.md
+- docs/ - схемы топологии
+  - diagram.vsdx
+  - diagram.png
+- files/ - рабочие файлы
+  - lesson.pkt
+  - log.txt
+-  screenchots/ - только скриншоты
+- README.md
 
 - 'lessnon.pkt' - основная топология для Cisco Packet Tracer.
 - 'log.txt' - отслеживает ход работы и содержит список всех команд, применённых при настройке.
