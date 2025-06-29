@@ -213,7 +213,7 @@ Router(config) ip nat inside source static tcp 192.168.3.2 80 213.234.10.2 80
 ![Симуляция, пакет с Router0 отправлен на Router1](screenshots/simulation2.png)
 
 - Когдад пакет идёт в обратную сторону и отправляется от Router0 к Switch0 - роутер посредством того, что он запомнил с какого компьютера была инициализирована данная сессия перенаправляет пакет от 213.234.20.2 на 192.168.2.2
-![[Симуляция, пакет с Router0 отправлен на Switch0](screenshots/simulation3.png)
+![Симуляция, пакет с Router0 отправлен на Switch0](screenshots/simulation3.png)
 
 --- 
 
