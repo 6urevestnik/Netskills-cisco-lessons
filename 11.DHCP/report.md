@@ -2,6 +2,7 @@
 
 **Дата выполнения:** *29.06.2025*
 **Тема:** Автоматизация адресации с помощью DHCP и DHCP Relay  
+**Видеоурок:** [Ссылка на видео](https://vkvideo.ru/video-32477510_456239175?t=21m34s)
 **Связанный урок:** [11.DHCP](../11.DHCP/README.md)
 
 ---
@@ -33,10 +34,14 @@
   ![Router1 конфигурация](screenshots/config_router1.png)
 
 - Получение IP по DHCP:
-  - PC3: ![PC3](screenshots/pc3_dhcp.png)
-  - PC4: ![PC4](screenshots/pc4_dhcp.png)
-  - PC5: ![PC5](screenshots/pc5_dhcp.png)
-  - PC6: ![PC6](screenshots/pc6_dhcp.png)
+  - PC3: 
+![PC3](screenshots/pc3_dhcp.png)
+  - PC4: 
+![PC4](screenshots/pc4_dhcp.png)
+  - PC5: 
+![PC5](screenshots/pc5_dhcp.png)
+  - PC6: 
+![PC6](screenshots/pc6_dhcp.png)
 
 ---
 
