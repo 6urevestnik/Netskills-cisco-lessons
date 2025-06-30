@@ -247,4 +247,4 @@ Router(config) ip nat inside source static tcp 192.168.3.2 80 213.234.10.2 80
 
 ---
 
-[Вернуться в корень README.md](../README.md)
+[Вернуться в начало](../README.md)

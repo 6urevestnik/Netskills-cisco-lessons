@@ -170,3 +170,7 @@ Switch(config-if) no channel-group
 -затем перенастройка с уникальными группами.
 
 ![Всё работает](./screenshots/dynamic_allworks.png)
+
+---
+
+[Вернуться в начало](../README.md)
