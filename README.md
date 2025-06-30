@@ -35,7 +35,7 @@
 |---|-----------------------|--------------------------------------------------------------|------------|----------|
 | 2 | [Basic Netwrotking](/2.Basic_Networking/README.md)     | Подключение устройств, IP		                           | 2025-06-23 | complete |
 | 3 | [L2 Switch](/3.L2_switch/README.md) | Сравнение L2 коммутатора и L1 хаба | 2025-06-23 | complete |
-| 4 | [Console и Telnet](/4.Console_Telnel/README.md) | Настройка консоли и Telnet | 2025-06-24 | complete |
+| 4 | [Console и Telnet](/4.Console_Telnet/README.md) | Настройка консоли и Telnet | 2025-06-24 | complete |
 | 5 | [Vlan](/5.VLAN/README.md) | Настройка Vlan, Access & Trunk портов | 2025-06-24 | complete |
 | 6 | [Протоколы STP и RSTP](/6.STP_RSTP/README.md) | Настройка STP, использование протокола RSTP | 2025-06-24 | complete |
 | 7 | [EtherChannel и LACP](/7.EtherChannel_LACP/README.md) | Настройка статического и динамического агрегирования каналов |2025-06-25| complete |
