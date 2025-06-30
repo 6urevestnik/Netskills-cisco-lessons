@@ -35,12 +35,16 @@
 
 - Получение IP по DHCP:
   - PC3: 
+
 ![PC3](screenshots/pc3_dhcp.png)
   - PC4: 
+
 ![PC4](screenshots/pc4_dhcp.png)
   - PC5: 
+
 ![PC5](screenshots/pc5_dhcp.png)
   - PC6: 
+
 ![PC6](screenshots/pc6_dhcp.png)
 
 ---
