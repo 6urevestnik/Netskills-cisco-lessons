@@ -170,13 +170,93 @@ Router show ip ospf neighbor
 ---
 
 ### Топология №2
-- repeat 19:12
+
+#### Устройства 
+
+4х ПК (PC0, PC1, PC2, PC3)
+2х коммутатор (Switch0, Switch1)
+2х маршрутизатор 1841 (Router0, Router1)
+2х маршрутизатор 2911 (Router2, Router3)
+1х сервер (Server0)
+
+#### IP-адресация
+
+| Устройство | IP-адрес/Маска | Порт |
+|------------|----------------|------|
+| R0 | 192.168.1.2/30 | Fa 0/0 |
+| R0 | 192.168.10.1/24 | Fa 0/1.10 |
+| R0 | 192.168.20.1/24 | Fa 0/1.20 |
+| R1 | 192.168.2.2/30 | Fa 0/0 |
+| R1 | 192.168.30.1/24 | Fa 0/1.30 |
+| R1 | 192.168.40.1/24 | Fa 0/1.40 |
+| R2 | 210.214.1.2/30 | Gi 0/0 |
+| R2 | 192.168.1.1/30 | Gi 0/1 |
+| R2 | 192.168.2.1/30 | Gi 0/2 |
+| Internet | 210.214.1.1/30 | Gi 0/1 |
+| Internet | 210.214.2.1/30 | Gi 0/0 |
+| Server0 | 210.214.2.2/30 | Fa 0/0 |
+| PC0 | 192.168.10.2/24 | Fa 0/0|
+| PC1 | | Fa 0/0|
+| PC2 | | Fa 0/0|
+| PC3 | | Fa 0/0|
+
+| R0 | 192.168.100.1/32 | loopback 0
+| R1 | 192.168.100.2/32 | loopback 0
+
+
+![Общий вид топологии](screenshots/topology2.png)
+
+#### Настройка OSPF
+Конфигурация для Router0, аналогичная для Router1
+```bash 
+# Создать loopback интерфейсы
+Router(config) interface loopback 0
+Router(config-if) ip address 192.168.100.1 255.255.255.255
+Router(config-if) no shutdown 
+
+# Настроить OSPF процесс
+Router(config) router ospf 1
+Router(config-router) network 192.168.10.0 0.0.0.255 area 0
+Router(config-router) network 192.168.20.0 0.0.0.255 area 0
+Router(config-router) network 192.168.1.0 0.0.0.3 area 0
+# Указать сети подключённые к маршрутизатору (анонсировать сеть)
+```
+Конфигурация для Router2 (соединяет Router0, Router1 и "Internet")
+```bash
+# Создать loopback интерфейсы
+Router(config) interface loopback 0
+Router(config-if) ip address 192.168.100.3 255.255.255.255
+Router(config-if) no shutdown 
+
+# Настроить OSPF процесс
+Router(config) router ospf 1
+Router(config-router) network 192.168.1.0 0.0.0.3 area 0
+Router(config-router) network 192.168.2.0 0.0.0.3 area 0
+```
+
+Проверить настройки OSPF и таблицу маршрутизации
+```bash
+Router show ip ospf neighbor 
+Router show ip route
+```
+![Результаты проверки соседей OSPF](screenshots/nbrh_R2.png)
+Проверить пинг - Успешно.
+![Результаты проверки пинга PC0 to PC1, PC2, PC3](screenshots/.png)
+
+Для подключения к имитации сети интернет
+```bash 
+# Прописать дефолтный маршрут на Router2 
+Router(config) ip route 0.0.0.0 0.0.0.0 210.214.1.1
+
+# Показать этот маршрут для Router0 и Router1
 ---
 
 ## Вывод
 - Правило хорошего тона: при использовании протокола динамической маршрутизации желательно настраивать адреса на loopback-интерфейсах
 - Маска 32-бита рассчитана на 1 IP-адрес
-
+- В Cisco Packet Tracer при указании адресов подключённых сетей, нужно обязательно указывать маску сети в формате wildcart
+- Анонсировать сеть - разрешить маршрутизатору рассылать обновления по поводу данной сети
+- Сеть с белыми IP-адресами включать в OSPF не нужно, потому что интернет провайдер не будет принимать пакеты динамической маршрутизации
 ---
 
 ## Работа над ошибками (Если были ошибки)
