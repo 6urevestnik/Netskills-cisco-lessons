@@ -226,7 +226,7 @@ Router(config) ip nat inside source list FOR-NAT interface gigabitEthernet 0/0 o
 ![Результаты проверки соседей OSPF](screenshots/nbrh_R2.png)
 
 - Проверка пинга с PC0 to PC1,  PC2, PC3
-![Результаты проверки пинга PC0 to PC1, PC2, PC3](screenshots/.png)
+![Результаты проверки пинга PC0 to PC1, PC2, PC3](screenshots/ping_pc0.png)
 
 - Таблица маршрутизации Router0
 ![Таблица маршрутизации Router0](screenshots/iproute_router0.png)
