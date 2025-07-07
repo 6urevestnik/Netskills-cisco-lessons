@@ -13,14 +13,6 @@
 - Ознакомиться с протоколами динамической маршратизации
 - На практике опробовать внутренние протоколы для маршрутизации внутри автономной системы
 
-
-
-
-
-
-
-
-
 ---
 
 ## Теория
@@ -96,7 +88,7 @@ Router(config) no shutdown
 ![Настройка R2](screenshots/showrun_R2.png)
 ![Настройка R3](screenshots/showrun_R3.png)
 
-#### 
+#### Настройка OSPF
 
 - Настроить конфигурацию маршрутизатора R1
 ```bash
@@ -196,9 +188,9 @@ Router show ip ospf neighbor
 | Internet | 210.214.2.1/30 | Gi 0/0 |
 | Server0 | 210.214.2.2/30 | Fa 0/0 |
 | PC0 | 192.168.10.2/24 | Fa 0/0|
-| PC1 | | Fa 0/0|
-| PC2 | | Fa 0/0|
-| PC3 | | Fa 0/0|
+| PC1 | 192.168.20.2/24 | Fa 0/0|
+| PC2 | 192.168.30.2/24 | Fa 0/0|
+| PC3 | 192.168.40.2/24 | Fa 0/0|
 
 | R0 | 192.168.100.1/32 | loopback 0
 | R1 | 192.168.100.2/32 | loopback 0
@@ -249,6 +241,39 @@ Router show ip route
 Router(config) ip route 0.0.0.0 0.0.0.0 210.214.1.1
 
 # Показать этот маршрут для Router0 и Router1
+Router(config) router ospf 1
+Router(config-router) default-information originate 
+```
+Чтобы проверить что всё прошло успешно проверить таблицу маршрутизации на Router0
+![Таблица маршрутизации Router0](screenshots/iproute_router0.png)
+
+Определить внутренние и внешние интерфейсы 
+```bash
+Router(config) interface gigabitEthernet 0/0
+Router(config-if) ip nat outside 
+
+Router(config) interface gigabitEthernet 0/1
+Router(config-if) ip nat inside 
+
+Router(config) interface gigabitEthernet 0/2
+Router(config-if) ip nat inside 
+```
+
+Задать Access лист для NAT
+```bash
+Router(config) ip access-list standard FOR-NAT
+Router(config-std-nacl) permit 192.168.10.0 0.0.0.255
+Router(config-std-nacl) permit 192.168.20.0 0.0.0.255
+Router(config-std-nacl) permit 192.168.30.0 0.0.0.255
+Router(config-std-nacl) permit 192.168.40.0 0.0.0.255
+
+# Использовать PAT
+Router(config) ip nat inside source list FOR-NAT interface gigabitEthernet 0/0 overload 
+```
+
+После выполненных действий можно пинговать сеть интернет (её имитацию с помощью маршрутизатора и сервера). Проверить пинг - успешно!
+![Проверить пинг с PC0 на Server0](screenshots/pc0_ping2.png)
+
 ---
 
 ## Вывод
@@ -261,8 +286,4 @@ Router(config) ip route 0.0.0.0 0.0.0.0 210.214.1.1
 
 ## Работа над ошибками (Если были ошибки)
 - На компьютерах забыл указать шлюзы по умолчанию, поэтому при проверке пинга - обратно на маршрутизаторы пакеты не доходили
-
-
----
-
-![](screenshots/.png)
+- Неверно указал encapsulation dot1q на маршрутизаторах, поэтому не пинговались устройства в сети
