@@ -45,7 +45,7 @@
 | 10.1 | [Routing practice](/10.Routing_(practice_project)/README.md) | Отработка полученных знаний маршрутизации на практике | 2025-06-27 | complete |
 | 11 | [DHCP](/11.DHCP/README.md) | Использование технологии DHCP, настройка DHCP-сервера, использование коммутатора в качестве DHCP-сервера | 2025-06-29 | complete |
 | 12 | [NAT](/12.NAT/README.md) | Разбор типов IP-адресов, настройка Static NAT, обеспечение доступа в интернет с помощью PAT | 2025-06-29 | complete |
-| 13 | OSPF | В разработке …
+| 13 | [OSPF](/13.OSPF/README.md) | OSPF | 2025-07-01 | complete |
 | 14 | EIGRP | В разработке …
 
 --- 
